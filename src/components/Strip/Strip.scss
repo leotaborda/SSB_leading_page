@@ -32,6 +32,10 @@
       background: $color-white;
       opacity: 0.4;
       margin-left: $spacing-xl;
+
+      @include respond-to(md) {
+        display: none;
+      }
     }
   }
 

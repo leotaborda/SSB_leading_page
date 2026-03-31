@@ -22,6 +22,13 @@
   transition: transform $transition-fast, box-shadow $transition-fast, padding $transition-base;
   overflow: hidden;
 
+  @include respond-to(sm) {
+    bottom: 1rem;
+    right: 1rem;
+    width: 3.25rem;
+    height: 3.25rem;
+  }
+
   &__icon {
     font-size: 1.2rem;
     flex-shrink: 0;
@@ -38,7 +45,6 @@
   }
 
   &:hover {
-    transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(37, 211, 102, 0.45);
   }
 
@@ -47,7 +53,6 @@
   }
 
   @include respond-to(sm) {
-    // No mobile mostra só o ícone
     padding: 0.7rem;
     border-radius: 50%;
 

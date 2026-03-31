@@ -21,7 +21,6 @@
     }
   }
 
-  // ── Brand ───────────────────────────────────────────────
   &__logo {
     display: flex;
     align-items: center;
@@ -90,7 +89,6 @@
     .bi-instagram:hover { color: #E1306C; }
   }
 
-  // ── Links & Info ────────────────────────────────────────
   &__links {
     display: flex;
     flex-direction: column;
@@ -135,7 +133,6 @@
     flex-shrink: 0;
   }
 
-  // ── Bottom ──────────────────────────────────────────────
   &__bottom {
     padding: $spacing-md 0;
     text-align: center;
