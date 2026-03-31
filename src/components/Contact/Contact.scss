@@ -111,6 +111,12 @@
     display: flex;
     flex-direction: column;
     gap: $spacing-sm;
+
+    @include respond-to(sm) {
+      padding: $spacing-sm;
+      gap: $spacing-xs;
+      border-radius: $border-radius-md;
+    }
   }
 
   &__field {
@@ -186,6 +192,12 @@
     text-align: center;
     gap: $spacing-md;
     min-height: 320px;
+
+    @include respond-to(sm) {
+      padding: $spacing-lg $spacing-sm;
+      min-height: 0;
+      border-radius: $border-radius-md;
+    }
   }
 
   &__success-icon {
