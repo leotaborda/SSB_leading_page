@@ -166,5 +166,64 @@
     margin-top: $spacing-xs;
     padding: 0.9rem;
     font-size: $font-size-md;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-xs;
+
+    i { font-size: 1.1rem; }
+  }
+
+  &__success {
+    background: $color-white;
+    padding: $spacing-xl $spacing-lg;
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-md;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: $spacing-md;
+    min-height: 320px;
+  }
+
+  &__success-icon {
+    font-size: 3.5rem;
+    color: #25D366;
+    line-height: 1;
+
+    &--warn {
+      color: $color-primary;
+    }
+  }
+
+  &__success-title {
+    @include heading-style;
+    font-size: $font-size-xl;
+    color: $color-dark;
+    margin: 0;
+  }
+
+  &__success-text {
+    color: $color-warm-gray;
+    font-size: $font-size-base;
+    line-height: 1.7;
+    max-width: 340px;
+    margin: 0;
+  }
+
+  &__reset {
+    @include button-primary;
+    background: transparent;
+    color: $color-primary;
+    border: 2px solid $color-primary;
+    padding: 0.75rem 1.8rem;
+    margin-top: $spacing-xs;
+
+    &:hover {
+      background: $color-primary;
+      color: $color-white;
+    }
   }
 }

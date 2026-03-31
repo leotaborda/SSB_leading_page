@@ -1,14 +1,79 @@
+import { useState } from 'react'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import './Contact.scss'
 
+const WHATSAPP_NUMBER = '5519989992747'
+const BUSINESS_START = 9
+const BUSINESS_END = 17
+
+const eventLabels: Record<string, string> = {
+  aniversario: 'Aniversário',
+  corporativo: 'Corporativo',
+  casamento: 'Casamento / Noivado',
+  cha: 'Chá de Bebê / Revelação',
+  outro: 'Outro',
+}
+
+function maskPhone(value: string): string {
+  const digits = value.replaceAll(/\D/g, '').slice(0, 11)
+  if (digits.length === 0) return ''
+  if (digits.length <= 2) return `(${digits}`
+  if (digits.length <= 7) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`
+  return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`
+}
+
 const Contact = () => {
+  const [name, setName] = useState('')
+  const [phone, setPhone] = useState('')
+  const [event, setEvent] = useState('')
+  const [details, setDetails] = useState('')
+  const [submitted, setSubmitted] = useState(false)
+  const [withinHours, setWithinHours] = useState(true)
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPhone(maskPhone(e.target.value))
+  }
+
+  const handleSubmit = (e: React.SyntheticEvent) => {
+    e.preventDefault()
+
+    const h = new Date().getHours()
+    const inHours = h >= BUSINESS_START && h < BUSINESS_END
+    setWithinHours(inHours)
+    setSubmitted(true)
+
+    const eventLabel = eventLabels[event] || event || 'Não informado'
+    const text = [
+      'Olá! Gostaria de fazer uma encomenda.',
+      '',
+      `*Nome:* ${name || 'Não informado'}`,
+      `*Telefone:* ${phone || 'Não informado'}`,
+      `*Tipo de evento:* ${eventLabel}`,
+      `*Detalhes:* ${details || 'Não informado'}`,
+    ].join('\n')
+
+    window.open(
+      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`,
+      '_blank',
+      'noopener,noreferrer'
+    )
+  }
+
+  const handleReset = () => {
+    setName('')
+    setPhone('')
+    setEvent('')
+    setDetails('')
+    setSubmitted(false)
+  }
+
   return (
     <section id="contato" className="contact">
       <div className="contact__container">
         <div className="contact__info">
           <h2 className="contact__title">
-            Faça sua
-            <span> encomenda</span>
+            Faça sua{' '}
+            <span>encomenda</span>
           </h2>
           <p className="contact__text">
             Entre em contato pelo WhatsApp ou preencha o formulário ao lado.
@@ -22,7 +87,7 @@ const Contact = () => {
               rel="noopener noreferrer"
               className="contact__whatsapp"
             >
-              <i className="bi bi-whatsapp" />
+              <i className="bi bi-whatsapp" />{' '}
               Chamar no WhatsApp
             </a>
 
@@ -31,7 +96,7 @@ const Contact = () => {
                 <i className="bi bi-clock contact__detail-icon" />
                 <div>
                   <span className="contact__detail-label">Horário de atendimento</span>
-                  <span className="contact__detail-value">Seg a Sáb, 8h às 18h</span>
+                  <span className="contact__detail-value">Seg a Sáb, 9h às 17h</span>
                 </div>
               </div>
               <div className="contact__detail">
@@ -53,49 +118,87 @@ const Contact = () => {
           </div>
         </div>
 
-        <form className="contact__form" onSubmit={(e) => e.preventDefault()}>
-          <div className="contact__field">
-            <label htmlFor="name" className="contact__label">Nome</label>
-            <input
-              type="text"
-              id="name"
-              className="contact__input"
-              placeholder="Seu nome completo"
+        {submitted ? (
+          <div className="contact__success">
+            <i
+              className={`bi ${
+                withinHours ? 'bi-check-circle' : 'bi-clock'
+              } contact__success-icon${
+                withinHours ? '' : ' contact__success-icon--warn'
+              }`}
             />
+            <h3 className="contact__success-title">
+              {withinHours ? 'Pedido enviado! 🎉' : 'Mensagem enviada!'}
+            </h3>
+            <p className="contact__success-text">
+              {withinHours
+                ? 'Você foi redirecionado para o nosso WhatsApp com a mensagem pronta. Aguarde nosso retorno em breve! 😊'
+                : `Estamos fora do horário de atendimento (9h–17h), mas sua mensagem foi encaminhada pelo WhatsApp. Retornaremos assim que possível!`}
+            </p>
+            <button onClick={handleReset} className="contact__reset">
+              Fazer outro pedido
+            </button>
           </div>
-          <div className="contact__field">
-            <label htmlFor="phone" className="contact__label">Telefone / WhatsApp</label>
-            <input
-              type="tel"
-              id="phone"
-              className="contact__input"
-              placeholder="(00) 00000-0000"
-            />
-          </div>
-          <div className="contact__field">
-            <label htmlFor="event" className="contact__label">Tipo do evento</label>
-            <select id="event" className="contact__input contact__select">
-              <option value="">Selecione...</option>
-              <option value="aniversario">Aniversário</option>
-              <option value="corporativo">Corporativo</option>
-              <option value="casamento">Casamento / Noivado</option>
-              <option value="cha">Chá de Bebê / Revelação</option>
-              <option value="outro">Outro</option>
-            </select>
-          </div>
-          <div className="contact__field">
-            <label htmlFor="message" className="contact__label">Detalhes da encomenda</label>
-            <textarea
-              id="message"
-              className="contact__input contact__textarea"
-              placeholder="Quantidade de pessoas, data do evento, itens desejados..."
-              rows={4}
-            />
-          </div>
-          <button type="submit" className="contact__submit">
-            Enviar Pedido
-          </button>
-        </form>
+        ) : (
+          <form className="contact__form" onSubmit={handleSubmit}>
+            <div className="contact__field">
+              <label htmlFor="name" className="contact__label">Nome</label>
+              <input
+                type="text"
+                id="name"
+                className="contact__input"
+                placeholder="Seu nome completo"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </div>
+            <div className="contact__field">
+              <label htmlFor="phone" className="contact__label">Telefone / WhatsApp</label>
+              <input
+                type="tel"
+                id="phone"
+                className="contact__input"
+                placeholder="(00) 00000-0000"
+                value={phone}
+                onChange={handlePhoneChange}
+                inputMode="numeric"
+                required
+              />
+            </div>
+            <div className="contact__field">
+              <label htmlFor="event" className="contact__label">Tipo do evento</label>
+              <select
+                id="event"
+                className="contact__input contact__select"
+                value={event}
+                onChange={(e) => setEvent(e.target.value)}
+              >
+                <option value="">Selecione...</option>
+                <option value="aniversario">Aniversário</option>
+                <option value="corporativo">Corporativo</option>
+                <option value="casamento">Casamento / Noivado</option>
+                <option value="cha">Chá de Bebê / Revelação</option>
+                <option value="outro">Outro</option>
+              </select>
+            </div>
+            <div className="contact__field">
+              <label htmlFor="message" className="contact__label">Detalhes da encomenda</label>
+              <textarea
+                id="message"
+                className="contact__input contact__textarea"
+                placeholder="Quantidade de pessoas, data do evento, itens desejados..."
+                rows={4}
+                value={details}
+                onChange={(e) => setDetails(e.target.value)}
+              />
+            </div>
+            <button type="submit" className="contact__submit">
+              <i className="bi bi-whatsapp" />{' '}
+              Enviar Pedido
+            </button>
+          </form>
+        )}
       </div>
     </section>
   )
