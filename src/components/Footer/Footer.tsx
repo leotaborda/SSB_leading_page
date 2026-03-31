@@ -57,7 +57,7 @@ const Footer = () => {
           <div className="footer__links">
             <h4 className="footer__links-title">Contato</h4>
             <p className="footer__info">
-              <i className="bi bi-clock footer__info-icon" /> Seg a Sáb, 8h às 18h
+              <i className="bi bi-clock footer__info-icon" /> Seg a Sáb, 9h às 17h
             </p>
             <p className="footer__info">
               <i className="bi bi-whatsapp footer__info-icon" /> (19) 98999-2747
