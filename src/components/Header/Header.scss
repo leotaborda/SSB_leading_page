@@ -37,7 +37,6 @@
     justify-content: space-between;
   }
 
-  // ── Logo ────────────────────────────────────────────────
   &__logo {
     display: flex;
     align-items: center;
@@ -77,7 +76,6 @@
     transition: color $transition-fast;
   }
 
-  // ── Nav ─────────────────────────────────────────────────
   &__nav {
     display: flex;
     align-items: center;
@@ -157,7 +155,6 @@
     }
   }
 
-  // ── Hamburger ───────────────────────────────────────────
   &__hamburger {
     display: none;
     flex-direction: column;

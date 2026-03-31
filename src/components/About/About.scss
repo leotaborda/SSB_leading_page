@@ -19,7 +19,6 @@
     }
   }
 
-  // ── Painel visual esquerdo ──────────────────────────────
   &__visual {
     position: relative;
 
@@ -41,7 +40,6 @@
     position: relative;
     overflow: hidden;
 
-    // Padrão de fundo sutil
     &::before {
       content: '';
       position: absolute;
@@ -50,7 +48,6 @@
       background-size: 24px 24px;
     }
 
-    // Ornamento canto superior direito
     &::after {
       content: '';
       position: absolute;
@@ -163,7 +160,6 @@
     background: rgba(255,255,255,0.2);
   }
 
-  // ── Coluna de texto ──────────────────────────────────────
   &__eyebrow {
     display: inline-block;
     font-size: $font-size-xs;

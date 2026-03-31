@@ -10,7 +10,6 @@
   background: $color-dark;
   overflow: hidden;
 
-  // Gradiente principal
   &::before {
     content: '';
     position: absolute;
@@ -24,7 +23,6 @@
     z-index: 1;
   }
 
-  // Grade decorativa
   &::after {
     content: '';
     position: absolute;
@@ -41,7 +39,6 @@
     z-index: 2;
     inset: 0;
 
-    // Brilho lateral suave
     &::before {
       content: '';
       position: absolute;
@@ -52,7 +49,6 @@
       background: radial-gradient(ellipse, rgba(212, 168, 83, 0.08) 0%, transparent 65%);
     }
 
-    // Ornamento círculo decorativo
     &::after {
       content: '';
       position: absolute;

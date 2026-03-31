@@ -47,7 +47,6 @@
   }
 
   @include respond-to(sm) {
-    // No mobile mostra só o ícone
     padding: 0.7rem;
     border-radius: 50%;
 
