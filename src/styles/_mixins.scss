@@ -1,0 +1,100 @@
+@use 'variables' as *;
+
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == sm {
+    @media (max-width: $breakpoint-sm) { @content; }
+  } @else if $breakpoint == md {
+    @media (max-width: $breakpoint-md) { @content; }
+  } @else if $breakpoint == lg {
+    @media (max-width: $breakpoint-lg) { @content; }
+  } @else if $breakpoint == xl {
+    @media (max-width: $breakpoint-xl) { @content; }
+  }
+}
+
+@mixin container {
+  width: 100%;
+  max-width: $container-max;
+  margin: 0 auto;
+  padding: 0 $spacing-md;
+}
+
+@mixin section-padding {
+  padding: $spacing-3xl 0;
+
+  @include respond-to(md) {
+    padding: $spacing-2xl 0;
+  }
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin heading-style {
+  font-family: $font-heading;
+  color: $color-dark;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+@mixin section-title {
+  @include heading-style;
+  font-size: $font-size-3xl;
+  text-align: center;
+  margin-bottom: $spacing-xl;
+  position: relative;
+
+  &::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: $color-primary;
+    margin: $spacing-sm auto 0;
+    border-radius: 2px;
+  }
+
+  @include respond-to(md) {
+    font-size: $font-size-2xl;
+  }
+}
+
+@mixin button-primary {
+  display: inline-block;
+  background: $color-primary;
+  color: $color-white;
+  font-family: $font-body;
+  font-size: $font-size-base;
+  font-weight: 600;
+  padding: 0.875rem 2rem;
+  border: none;
+  border-radius: $border-radius-sm;
+  cursor: pointer;
+  transition: background $transition-fast, transform $transition-fast;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+
+  &:hover {
+    background: $color-primary-dark;
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+@mixin button-outline {
+  @include button-primary;
+  background: transparent;
+  color: $color-primary;
+  border: 2px solid $color-primary;
+
+  &:hover {
+    background: $color-primary;
+    color: $color-white;
+  }
+}

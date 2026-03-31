@@ -1,0 +1,169 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.contact {
+  @include section-padding;
+  background: $color-light;
+
+  &__container {
+    @include container;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $spacing-2xl;
+    align-items: start;
+
+    @include respond-to(md) {
+      grid-template-columns: 1fr;
+      gap: $spacing-xl;
+    }
+  }
+
+  &__title {
+    @include heading-style;
+    font-size: $font-size-3xl;
+    margin-bottom: $spacing-sm;
+
+    span {
+      color: $color-primary;
+      display: block;
+    }
+
+    @include respond-to(md) {
+      font-size: $font-size-2xl;
+    }
+  }
+
+  &__text {
+    color: $color-warm-gray;
+    font-size: $font-size-base;
+    line-height: 1.7;
+    margin-bottom: $spacing-lg;
+  }
+
+  &__channels {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+  }
+
+  &__whatsapp {
+    @include button-primary;
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-xs;
+    background: #25D366;
+    font-size: $font-size-base;
+    padding: 0.9rem 1.8rem;
+    width: fit-content;
+
+    i { font-size: 1.2rem; }
+
+    &:hover { background: #1fb855; }
+  }
+
+  &__details {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+  }
+
+  &__detail {
+    display: flex;
+    align-items: flex-start;
+    gap: $spacing-xs;
+  }
+
+  &__detail-icon {
+    font-size: 1rem;
+    color: $color-primary;
+    margin-top: 3px;
+    flex-shrink: 0;
+  }
+
+  &__detail-label {
+    display: block;
+    font-size: $font-size-xs;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: $color-warm-gray;
+    font-weight: 700;
+  }
+
+  &__detail-value {
+    display: block;
+    font-size: $font-size-sm;
+    color: $color-dark;
+  }
+
+  &__detail-sub {
+    display: block;
+    font-size: $font-size-xs;
+    color: $color-warm-gray;
+    margin-top: 1px;
+  }
+
+  &__form {
+    background: $color-white;
+    padding: $spacing-lg;
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-md;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__label {
+    font-size: $font-size-sm;
+    font-weight: 700;
+    color: $color-dark;
+  }
+
+  &__input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1.5px solid darken($color-secondary, 8%);
+    border-radius: $border-radius-sm;
+    font-family: $font-body;
+    font-size: $font-size-base;
+    color: $color-dark;
+    background: $color-light;
+    transition: border-color $transition-fast;
+    outline: none;
+
+    &::placeholder { color: lighten($color-warm-gray, 15%); }
+    &:focus {
+      border-color: $color-primary;
+      background: $color-white;
+    }
+  }
+
+  &__select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M6 8L1 3h10z' fill='%236B5B50'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+    cursor: pointer;
+  }
+
+  &__textarea {
+    resize: vertical;
+    min-height: 100px;
+    max-height: 300px;
+  }
+
+  &__submit {
+    @include button-primary;
+    width: 100%;
+    text-align: center;
+    margin-top: $spacing-xs;
+    padding: 0.9rem;
+    font-size: $font-size-md;
+  }
+}

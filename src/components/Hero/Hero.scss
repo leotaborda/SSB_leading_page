@@ -1,0 +1,215 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $color-dark;
+  overflow: hidden;
+
+  // Gradiente principal
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      150deg,
+      rgba(43, 24, 16, 0.98) 0%,
+      rgba(80, 35, 15, 0.90) 50%,
+      rgba(154, 53, 21, 0.80) 100%
+    );
+    z-index: 1;
+  }
+
+  // Grade decorativa
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+    z-index: 1;
+  }
+
+  &__overlay {
+    position: absolute;
+    z-index: 2;
+    inset: 0;
+
+    // Brilho lateral suave
+    &::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      left: -10%;
+      width: 60%;
+      height: 100%;
+      background: radial-gradient(ellipse, rgba(212, 168, 83, 0.08) 0%, transparent 65%);
+    }
+
+    // Ornamento círculo decorativo
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -80px;
+      right: -80px;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      border: 60px solid rgba(194, 73, 29, 0.08);
+    }
+  }
+
+  &__content {
+    position: relative;
+    z-index: 3;
+    @include container;
+    text-align: center;
+    padding-top: 120px;
+    padding-bottom: $spacing-3xl;
+    max-width: 820px;
+  }
+
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: $font-size-xs;
+    font-weight: 700;
+    color: $color-gold;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: $spacing-md;
+
+    &::before,
+    &::after {
+      content: '—';
+      color: rgba(212, 168, 83, 0.5);
+    }
+  }
+
+  &__title {
+    font-family: $font-heading;
+    font-size: $font-size-4xl;
+    font-weight: 700;
+    color: $color-white;
+    line-height: 1.1;
+    margin-bottom: $spacing-md;
+
+    @include respond-to(md) {
+      font-size: $font-size-3xl;
+    }
+
+    @include respond-to(sm) {
+      font-size: 2rem;
+    }
+  }
+
+  &__title-accent {
+    display: block;
+    color: $color-gold;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 0.88em;
+  }
+
+  &__description {
+    font-size: $font-size-md;
+    color: rgba(255, 255, 255, 0.72);
+    line-height: 1.8;
+    max-width: 520px;
+    margin: 0 auto $spacing-lg;
+
+    @include respond-to(sm) {
+      font-size: $font-size-base;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    gap: $spacing-sm;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: $spacing-2xl;
+  }
+
+  &__btn {
+    &--primary {
+      @include button-primary;
+      padding: 1rem 2.5rem;
+      font-size: $font-size-base;
+      letter-spacing: 0.02em;
+    }
+
+    &--outline {
+      @include button-primary;
+      background: transparent;
+      border: 1.5px solid rgba(255, 255, 255, 0.35);
+      color: $color-white;
+      padding: 1rem 2.5rem;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.6);
+        color: $color-white;
+      }
+    }
+  }
+
+  &__badges {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-md;
+    flex-wrap: nowrap;
+
+    @include respond-to(sm) {
+      gap: $spacing-sm;
+    }
+  }
+
+  &__badge-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 0;
+  }
+
+  &__badge-number {
+    font-family: $font-heading;
+    font-size: $font-size-xl;
+    font-weight: 700;
+    color: $color-white;
+    white-space: nowrap;
+
+    @include respond-to(sm) {
+      font-size: $font-size-lg;
+    }
+  }
+
+  &__badge-label {
+    font-size: $font-size-xs;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    text-align: center;
+    line-height: 1.3;
+
+    @include respond-to(sm) {
+      font-size: 10px;
+      letter-spacing: 0.03em;
+    }
+  }
+
+  &__badge-divider {
+    width: 1px;
+    height: 36px;
+    background: rgba(255, 255, 255, 0.15);
+    flex-shrink: 0;
+  }
+}

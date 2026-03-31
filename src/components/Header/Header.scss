@@ -1,0 +1,188 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: $spacing-sm 0;
+  transition: all $transition-base;
+
+  &--scrolled {
+    background: rgba(255, 249, 242, 0.97);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 1px 0 rgba(43, 24, 16, 0.08);
+    padding: 0.6rem 0;
+
+    .header__logo-name   { color: $color-primary; }
+    .header__logo-subtitle { color: $color-warm-gray; }
+
+    .header__nav-link {
+      color: $color-dark;
+
+      &--cta  { color: $color-white; }
+      &--instagram { color: $color-warm-gray; }
+    }
+
+    .header__hamburger span { background: $color-dark; }
+  }
+
+  &__container {
+    @include container;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  // ── Logo ────────────────────────────────────────────────
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    z-index: 1001;
+  }
+
+  &__logo-img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+
+  &__logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+  }
+
+  &__logo-name {
+    font-family: $font-heading;
+    font-size: $font-size-xl;
+    font-weight: 700;
+    color: $color-white;
+    transition: color $transition-fast;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.4);
+  }
+
+  &__logo-subtitle {
+    font-size: 9px;
+    color: rgba(255,255,255,0.65);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 700;
+    transition: color $transition-fast;
+  }
+
+  // ── Nav ─────────────────────────────────────────────────
+  &__nav {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+
+    @include respond-to(lg) {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 280px;
+      height: 100vh;
+      background: $color-light;
+      flex-direction: column;
+      justify-content: center;
+      gap: $spacing-lg;
+      transform: translateX(100%);
+      transition: transform $transition-base;
+      box-shadow: $shadow-lg;
+
+      .header__nav-link { color: $color-dark; }
+      .header__nav-link--cta { color: $color-white !important; }
+      .header__nav-link--instagram { color: $color-warm-gray !important; }
+
+      &--open { transform: translateX(0); }
+    }
+  }
+
+  &__nav-link {
+    font-size: $font-size-sm;
+    font-weight: 700;
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    position: relative;
+    letter-spacing: 0.02em;
+    transition: color $transition-fast;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: $color-primary;
+      transition: width $transition-fast;
+      border-radius: 1px;
+    }
+
+    &:hover {
+      color: $color-white;
+      &::after { width: 100%; }
+    }
+
+    &--cta {
+      @include button-primary;
+      font-size: $font-size-sm;
+      padding: 0.55rem 1.25rem;
+      color: $color-white !important;
+
+      &::after { display: none; }
+    }
+
+    &--instagram {
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      color: rgba(255,255,255,0.75);
+      transition: color $transition-fast;
+
+      &::after { display: none; }
+
+      &:hover { color: #E1306C; }
+    }
+
+    @include respond-to(lg) {
+      font-size: $font-size-md;
+    }
+  }
+
+  // ── Hamburger ───────────────────────────────────────────
+  &__hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    padding: 4px;
+    z-index: 1001;
+    cursor: pointer;
+
+    span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: rgba(255,255,255,0.85);
+      border-radius: 2px;
+      transition: all $transition-fast;
+    }
+
+    &--active {
+      span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+      span:nth-child(2) { opacity: 0; }
+      span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+    }
+
+    @include respond-to(lg) { display: flex; }
+  }
+}

@@ -1,0 +1,60 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.float-btn {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  z-index: 999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #25D366;
+  color: $color-white;
+  border-radius: 50px;
+  text-decoration: none;
+  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.35);
+
+  transition: transform $transition-fast, box-shadow $transition-fast, padding $transition-base;
+  overflow: hidden;
+
+  &__icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  &__label {
+    font-size: $font-size-xs;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+    max-width: 80px;
+    transition: max-width $transition-base, opacity $transition-base;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.45);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  @include respond-to(sm) {
+    // No mobile mostra só o ícone
+    padding: 0.7rem;
+    border-radius: 50%;
+
+    .float-btn__label {
+      max-width: 0;
+      opacity: 0;
+      overflow: hidden;
+    }
+  }
+}

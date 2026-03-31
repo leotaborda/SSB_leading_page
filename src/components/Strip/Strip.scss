@@ -1,0 +1,49 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.strip {
+  background: $color-primary;
+  padding: $spacing-md 0;
+  overflow: hidden;
+
+  &__inner {
+    @include container;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-xl;
+    flex-wrap: wrap;
+
+    @include respond-to(md) {
+      gap: $spacing-md;
+    }
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+
+    &:not(:last-child)::after {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 1rem;
+      background: $color-white;
+      opacity: 0.4;
+      margin-left: $spacing-xl;
+    }
+  }
+
+  &__icon {
+    font-size: 1.1rem;
+  }
+
+  &__text {
+    font-size: $font-size-sm;
+    font-weight: 700;
+    color: $color-white;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+}

@@ -1,0 +1,145 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.footer {
+  background: $color-dark;
+  color: rgba(255, 255, 255, 0.7);
+  padding: $spacing-2xl 0 0;
+
+  &__container { @include container; }
+
+  &__top {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: $spacing-2xl;
+    padding-bottom: $spacing-xl;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+    @include respond-to(md) {
+      grid-template-columns: 1fr;
+      gap: $spacing-lg;
+    }
+  }
+
+  // ── Brand ───────────────────────────────────────────────
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: $spacing-sm;
+    text-decoration: none;
+  }
+
+  &__logo-img {
+    width: 38px;
+    height: 38px;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+
+  &__logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+  }
+
+  &__logo-name {
+    font-family: $font-heading;
+    font-size: $font-size-xl;
+    font-weight: 700;
+    color: $color-white;
+  }
+
+  &__logo-subtitle {
+    font-size: 9px;
+    color: $color-primary-light;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  &__tagline {
+    font-size: $font-size-sm;
+    line-height: 1.7;
+    max-width: 300px;
+    margin-bottom: $spacing-md;
+  }
+
+  &__social {
+    display: flex;
+    gap: $spacing-xs;
+  }
+
+  &__social-link {
+    width: 36px;
+    height: 36px;
+    border-radius: $border-radius-md;
+    border: 1px solid rgba(255,255,255,0.12);
+    @include flex-center;
+    color: rgba(255,255,255,0.6);
+    font-size: 1rem;
+    transition: all $transition-fast;
+    text-decoration: none;
+
+    &:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.25);
+      color: $color-white;
+    }
+
+    .bi-instagram:hover { color: #E1306C; }
+  }
+
+  // ── Links & Info ────────────────────────────────────────
+  &__links {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  &__links-title {
+    font-family: $font-heading;
+    font-size: $font-size-base;
+    font-weight: 600;
+    color: $color-white;
+    margin-bottom: $spacing-xs;
+  }
+
+  &__link {
+    font-size: $font-size-sm;
+    color: rgba(255, 255, 255, 0.6);
+    transition: color $transition-fast;
+    text-decoration: none;
+
+    &:hover { color: $color-primary-light; }
+  }
+
+  &__info {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: $font-size-sm;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.6);
+
+    &--link {
+      text-decoration: none;
+      transition: color $transition-fast;
+      &:hover { color: #E1306C; }
+    }
+  }
+
+  &__info-icon {
+    font-size: 0.85rem;
+    color: $color-primary-light;
+    flex-shrink: 0;
+  }
+
+  // ── Bottom ──────────────────────────────────────────────
+  &__bottom {
+    padding: $spacing-md 0;
+    text-align: center;
+    font-size: $font-size-xs;
+    color: rgba(255, 255, 255, 0.3);
+  }
+}
