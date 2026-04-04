@@ -29,6 +29,12 @@ const Contact = () => {
   const [details, setDetails] = useState('')
   const [submitted, setSubmitted] = useState(false)
   const [withinHours, setWithinHours] = useState(true)
+  const [wantsSalgado, setWantsSalgado] = useState(false)
+  const [wantsBolo, setWantsBolo] = useState(false)
+  const [wantsKit, setWantsKit] = useState(false)
+  const [salgadoQty, setSalgadoQty] = useState('')
+  const [boloQty, setBoloQty] = useState('')
+  const [kitDesc, setKitDesc] = useState('')
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPhone(maskPhone(e.target.value))
@@ -43,13 +49,23 @@ const Contact = () => {
     setSubmitted(true)
 
     const eventLabel = eventLabels[event] || event || 'Não informado'
+
+    const produtos: string[] = []
+    if (wantsSalgado) produtos.push(`🥟 Salgados — ${salgadoQty ? `${salgadoQty} unidades` : 'quantidade a definir'}`)
+    if (wantsBolo)    produtos.push(`🎂 Bolo — ${boloQty ? `${boloQty} unidade(s)` : 'quantidade a definir'}`)
+    if (wantsKit)     produtos.push(`🎁 Kit — ${kitDesc || 'a especificar'}`)
+
     const text = [
-      'Olá! Gostaria de fazer uma encomenda.',
+      'Olá! Gostaria de fazer uma encomenda. 🎉',
       '',
       `*Nome:* ${name || 'Não informado'}`,
       `*Telefone:* ${phone || 'Não informado'}`,
       `*Tipo de evento:* ${eventLabel}`,
-      `*Detalhes:* ${details || 'Não informado'}`,
+      '',
+      '*Produtos desejados:*',
+      ...produtos,
+      '',
+      `*Detalhes adicionais:* ${details || 'Nenhum'}`,
     ].join('\n')
 
     window.open(
@@ -64,6 +80,12 @@ const Contact = () => {
     setPhone('')
     setEvent('')
     setDetails('')
+    setWantsSalgado(false)
+    setWantsBolo(false)
+    setWantsKit(false)
+    setSalgadoQty('')
+    setBoloQty('')
+    setKitDesc('')
     setSubmitted(false)
   }
 
@@ -133,7 +155,7 @@ const Contact = () => {
             <p className="contact__success-text">
               {withinHours
                 ? 'Você foi redirecionado para o nosso WhatsApp com a mensagem pronta. Aguarde nosso retorno em breve! 😊'
-                : `Estamos fora do horário de atendimento (9h–17h), mas sua mensagem foi encaminhada pelo WhatsApp. Retornaremos assim que possível!`}
+                : 'Estamos fora do horário de atendimento (9h–17h), mas sua mensagem foi encaminhada pelo WhatsApp. Retornaremos assim que possível!'}
             </p>
             <button onClick={handleReset} className="contact__reset">
               Fazer outro pedido
@@ -141,6 +163,8 @@ const Contact = () => {
           </div>
         ) : (
           <form className="contact__form" onSubmit={handleSubmit}>
+
+            {/* Dados pessoais */}
             <div className="contact__field">
               <label htmlFor="name" className="contact__label">Nome</label>
               <input
@@ -182,21 +206,123 @@ const Contact = () => {
                 <option value="outro">Outro</option>
               </select>
             </div>
+
+            {/* Seleção de produtos */}
             <div className="contact__field">
-              <label htmlFor="message" className="contact__label">Detalhes da encomenda</label>
+              <span className="contact__label">O que você quer encomendar?</span>
+              <div className="contact__order-options">
+
+                <label className={`contact__order-option ${wantsSalgado ? 'contact__order-option--checked' : ''}`}>
+                  <input
+                    type="checkbox"
+                    className="contact__order-checkbox"
+                    checked={wantsSalgado}
+                    onChange={(e) => setWantsSalgado(e.target.checked)}
+                  />
+                  <span className="contact__order-icon">🥟</span>
+                  <span className="contact__order-name">Salgados</span>
+                  <i className="bi bi-check-lg contact__order-check" />
+                </label>
+
+                <label className={`contact__order-option ${wantsBolo ? 'contact__order-option--checked' : ''}`}>
+                  <input
+                    type="checkbox"
+                    className="contact__order-checkbox"
+                    checked={wantsBolo}
+                    onChange={(e) => setWantsBolo(e.target.checked)}
+                  />
+                  <span className="contact__order-icon">🎂</span>
+                  <span className="contact__order-name">Bolo</span>
+                  <i className="bi bi-check-lg contact__order-check" />
+                </label>
+
+                <label className={`contact__order-option ${wantsKit ? 'contact__order-option--checked' : ''}`}>
+                  <input
+                    type="checkbox"
+                    className="contact__order-checkbox"
+                    checked={wantsKit}
+                    onChange={(e) => setWantsKit(e.target.checked)}
+                  />
+                  <span className="contact__order-icon">🎁</span>
+                  <span className="contact__order-name">Kit</span>
+                  <i className="bi bi-check-lg contact__order-check" />
+                </label>
+
+              </div>
+            </div>
+
+            {/* Campos condicionais */}
+            {wantsSalgado && (
+              <div className="contact__field contact__field--conditional">
+                <label htmlFor="salgado-qty" className="contact__label">
+                  Quantos salgados?
+                </label>
+                <input
+                  type="number"
+                  id="salgado-qty"
+                  className="contact__input"
+                  placeholder="Ex: 100"
+                  min={1}
+                  value={salgadoQty}
+                  onChange={(e) => setSalgadoQty(e.target.value)}
+                />
+              </div>
+            )}
+
+            {wantsBolo && (
+              <div className="contact__field contact__field--conditional">
+                <label htmlFor="bolo-qty" className="contact__label">
+                  Quantos bolos?
+                </label>
+                <input
+                  type="number"
+                  id="bolo-qty"
+                  className="contact__input"
+                  placeholder="Ex: 1"
+                  min={1}
+                  value={boloQty}
+                  onChange={(e) => setBoloQty(e.target.value)}
+                />
+              </div>
+            )}
+
+            {wantsKit && (
+              <div className="contact__field contact__field--conditional">
+                <label htmlFor="kit-desc" className="contact__label">
+                  Qual kit você deseja?
+                </label>
+                <input
+                  type="text"
+                  id="kit-desc"
+                  className="contact__input"
+                  placeholder="Ex: Kit Festa Infantil, Kit Corporativo..."
+                  value={kitDesc}
+                  onChange={(e) => setKitDesc(e.target.value)}
+                />
+              </div>
+            )}
+
+            <div className="contact__field">
+              <label htmlFor="message" className="contact__label">Detalhes adicionais</label>
               <textarea
                 id="message"
                 className="contact__input contact__textarea"
-                placeholder="Quantidade de pessoas, data do evento, itens desejados..."
-                rows={4}
+                placeholder="Data do evento, observações, alergias..."
+                rows={3}
                 value={details}
                 onChange={(e) => setDetails(e.target.value)}
               />
             </div>
-            <button type="submit" className="contact__submit">
+
+            <button
+              type="submit"
+              className="contact__submit"
+              disabled={!wantsSalgado && !wantsBolo && !wantsKit}
+            >
               <i className="bi bi-whatsapp" />{' '}
               Enviar Pedido
             </button>
+
           </form>
         )}
       </div>
