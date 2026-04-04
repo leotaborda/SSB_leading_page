@@ -1,9 +1,14 @@
 @use '../../styles/variables' as *;
 @use '../../styles/mixins' as *;
 
+$card-width: 500px;
+$card-gap: $spacing-md;
+$track-duration: 35s;
+
 .testimonials {
   @include section-padding;
   background: $color-dark;
+  overflow: hidden;
 
   &__container {
     @include container;
@@ -26,27 +31,63 @@
     font-style: italic;
   }
 
-  &__grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+  &__marquee-wrap {
+    display: flex;
+    flex-direction: column;
     gap: $spacing-md;
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 8%,
+      black 92%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 8%,
+      black 92%,
+      transparent 100%
+    );
 
-    @include respond-to(md) {
-      grid-template-columns: 1fr;
+    &:hover .testimonials__track,
+    &--paused .testimonials__track {
+      animation-play-state: paused;
+    }
+  }
+
+  &__track {
+    display: flex;
+    gap: $card-gap;
+    width: max-content;
+    will-change: transform;
+
+    &--left {
+      animation: marquee-left $track-duration linear infinite;
+    }
+
+    &--right {
+      animation: marquee-right $track-duration linear infinite;
     }
   }
 
   &__card {
+    width: $card-width;
+    flex-shrink: 0;
     background: rgba(255,255,255,0.04);
     border: 1px solid rgba(255,255,255,0.07);
     padding: $spacing-lg;
     border-radius: $border-radius-md;
-    position: relative;
     transition: background $transition-fast, border-color $transition-fast;
 
     &:hover {
-      background: rgba(255,255,255,0.06);
-      border-color: rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.07);
+      border-color: rgba(255,255,255,0.14);
+    }
+
+    @include respond-to(sm) {
+      width: 260px;
+      padding: $spacing-md;
     }
   }
 
@@ -99,4 +140,14 @@
     font-size: $font-size-xs;
     color: rgba(255,255,255,0.4);
   }
+}
+
+@keyframes marquee-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(calc(-1 * (#{$card-width} + #{$card-gap}) * 5)); }
+}
+
+@keyframes marquee-right {
+  from { transform: translateX(calc(-1 * (#{$card-width} + #{$card-gap}) * 5)); }
+  to   { transform: translateX(0); }
 }
