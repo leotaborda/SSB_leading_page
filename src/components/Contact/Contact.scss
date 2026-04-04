@@ -178,6 +178,91 @@
     gap: $spacing-xs;
 
     i { font-size: 1.1rem; }
+
+    &:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      transform: none;
+    }
+  }
+
+  &__order-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: $spacing-xs;
+    margin-top: 4px;
+  }
+
+  &__order-option {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 0.75rem 0.5rem;
+    border: 1.5px solid color.adjust($color-secondary, $lightness: -8%);
+    border-radius: $border-radius-md;
+    background: $color-light;
+    cursor: pointer;
+    transition: all $transition-fast;
+    -webkit-user-select: none;
+    user-select: none;
+    text-align: center;
+
+    &:hover {
+      border-color: $color-primary;
+      background: rgba($color-primary, 0.04);
+    }
+
+    &--checked {
+      border-color: $color-primary;
+      background: rgba($color-primary, 0.07);
+    }
+  }
+
+  &__order-checkbox {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+  }
+
+  &__order-icon {
+    font-size: 1.6rem;
+    line-height: 1;
+  }
+
+  &__order-name {
+    font-size: $font-size-xs;
+    font-weight: 700;
+    color: $color-dark;
+    letter-spacing: 0.02em;
+  }
+
+  &__order-check {
+    position: absolute;
+    top: 6px;
+    right: 7px;
+    font-size: 0.7rem;
+    color: $color-primary;
+    opacity: 0;
+    transition: opacity $transition-fast;
+
+    .contact__order-option--checked & {
+      opacity: 1;
+    }
+  }
+
+  &__field--conditional {
+    animation: slideDown 0.2s ease;
+    padding-left: $spacing-xs;
+    border-left: 2px solid $color-primary;
+  }
+
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 
   &__success {
